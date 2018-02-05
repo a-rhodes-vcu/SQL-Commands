@@ -1,1 +1,1 @@
-This repository holds some SQL commands for a database theory course. This demonstrates effective SQL commands that creates tables, inserts data, selects, filters, updates and performs various analysis on data.
+This repository holds some SQL commands for a database theory course. This demonstrates effective SQL commands that creates tables, joins tables, inserts data, selects, filters, updates and performs various analysis on data.
