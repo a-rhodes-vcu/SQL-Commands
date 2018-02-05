@@ -1,0 +1,1067 @@
+
+CREATE TABLE my_employee
+(id NUMBER(4) CONSTRAINT my_employee_id_nn NOT NULL,
+last_name VARCHAR2(25),
+first_name VARCHAR2(25),
+userid VARCHAR2(8),
+salary NUMBER(9,2));
+
+DESCRIBE my_employee
+
+insert INTO my_employee VALUES (1, 'Patel', 'Ralph', 'rpatel', 895);
+
+insert INTO my_employee (id,last_name, first_name,userid, salary) VALUES(2, 'Dancs', 'Betty', 'bdancs', 860);
+
+select * from my_employee;
+
+Insert INTO my_employee VALUES (&p_id, '&p_last_name', '&p_first_name', '&p_userid', &p_salary);
+
+create table department(DEPARTMENT_ID number(4), DEPARTMENT_NAME varchar2(30), 
+Manager_Id number(6), Location_Id number(4));
+
+describe department;
+
+insert into department(department_id,department_name, manager_id,location_id)
+values (70,'Public Relations', 100,1700);
+
+describe department;
+select * from department;
+
+insert into department(department_id,department_name, manager_id,location_id)
+values (45,'Public Relations', 300,1500);
+
+insert into department(department_id,department_name )
+values (30,'Public Relations');
+
+select * from employees;
+
+INSERT INTO employee (employee_id, first_name, last_name, email,
+phone_number,hire_date, job_id, salary, commission_pct,
+manager_id,department_id)
+VALUES (009, 'Louis', 'Popp', 'LPOPP', '515.124.4567', SYSDATE, 
+'AC_ACCOUNT', 6900, NULL, 205, 111);
+
+describe employees;
+
+create table employee (employee_id number(6), first_name varchar2(20), last_name varchar2(25), email varchar2(25),
+phone_number varchar2(20),hire_date DATE, job_id varchar2(10), salary number(8,2), commission_pct number(2,2),
+manager_id number(6),department_id number(4))
+
+select employee_id, last_name, job_id, hire_date, commission_pct
+from employee
+where employee_id = 009;
+
+INSERT INTO employee
+VALUES(114, 'Den', 'Raphealy', 'DRAPHEAL', '515.127.4561',
+TO_DATE('FEB 3, 1999', 'MON DD, YYYY'),'SA_REP', 11000, 0.2, 100, 60);
+
+select * from employee;
+
+insert into department
+(department_id,department_name,location_id)
+values ('&department_id','&department_name',&location);
+
+select * from department;
+
+
+update employee
+set department_id = 50
+where employee_id = 009;
+
+select * from employee;
+
+create table copy_emp (employee_id number(6), first_name varchar2(20), last_name varchar2(25), email varchar2(25),
+phone_number varchar2(20),hire_date DATE, job_id varchar2(10), salary number(8,2), commission_pct number(2,2),
+manager_id number(6),department_id number(4));
+
+insert into copy_emp
+select *
+from employee;
+
+select * from copy_emp;
+
+update copy_emp
+set department_id = 100;
+
+update employee
+set job_id = 'IT PROG', commission_pct = NULL
+where employee_id = 009;
+
+select * from employee;
+
+UPDATE   employee SET manager_id  = (SELECT  manager_id 
+FROM    employees 
+WHERE   employee_id = 114), 
+salary  = (SELECT  salary 
+FROM    employees 
+WHERE   employee_id = 114) 
+WHERE    employee_id    =  007;
+
+
+
+
+INSERT INTO employee
+VALUES(006, 'ogh', 'Raphealy', 'DRAPHEAL', '550.125.6788',
+TO_DATE('FEB 3, 1999', 'MON DD, YYYY'),'bas_pl', 10000, 0.0, 056, 56);
+
+INSERT INTO employee
+VALUES(005, 'Den', 'Raphealy', 'DRAPHEAL', '213.111.6745',
+TO_DATE('FEB 3, 1999', 'MON DD, YYYY'),'Clo_MA', 08000, 0.1, 077, 70);
+
+INSERT INTO employee
+VALUES(007, 'Den', 'Raphealy', 'DRAPHEAL', '123.444.2345',
+TO_DATE('FEB 3, 1999', 'MON DD, YYYY'),'POP_MA', 07000, 0.2, 112, 45);
+
+
+select * from employee;
+
+update copy_emp
+set department_id = (select department_id 
+                      from employee
+                      where employee_id = 007)
+where job_id = (select job_id
+                from employee
+                where employee_id = 114);
+
+select * from copy_emp;
+
+
+delete from employee
+where employee_id = 009;
+
+select * from employee;
+
+delete from copy_emp
+where employee_id = 009;
+
+select * from department;
+
+
+create table instructors (ID char(5), name varchar(20) not null, dept_name varchar(20), salary number(8,2), primary key (ID), foreign key (dept_name) references departs);
+
+create table departs (dept_name varchar(20), building varchar(15), budget number(12,2), primary key (dept_name));
+
+insert into instructors values ('10211', 'Smith', 'Biology', 66000);
+insert into instructors values ('12300', 'Waller', 'Math', 56000);
+insert into instructors  values ('11289', 'Mack', 'Physics', 11000);
+insert into instructors  values ('11111', 'Wallace', 'English', 30000);
+insert into instructors  values ('13289', 'White', 'Literature', 32000);
+
+
+select * from instructors;
+
+insert into departs (dept_name, building, budget)
+values ('Literature', 'East Hall', 3000);
+
+
+select * from locations;
+
+update departs set budget = 25000 where dept_name = 'Biology';
+
+select * from departs;
+
+select * from instructors;
+
+update instructors set salary = salary * 1.05 where name = 'Smith';
+
+update instructors
+set salary = salary * 1.07;
+
+update instructors
+set salary = case
+when salary <= 100000 then salary * 1.05
+else salary * 1.03
+end;
+
+alter table instructors add email varchar(25);
+
+alter table instructors drop column email;
+
+
+truncate table department;
+
+drop table instructor;
+
+drop table department;
+
+select sysdate from dual;
+
+create table tablename(time varchar(10));
+
+insert into tablename (current_time) values (sysdate);
+
+delete from instructors where name = 'Smith';
+
+truncate table departs;
+
+drop table instructors;
+
+drop table departs;
+
+-----end of ppp excerises----
+update departments set location_id = 1200 where manager_id = 205;
+
+select * from employees;
+
+update employees 
+set salary = case
+when salary < 12000 AND salary >10000 
+then 8000
+end
+where employee_id = '114';
+
+update employees
+set job_id = 'IT_PROG'
+where department_id = '100' and employee_id = '110'; 
+
+savepoint savepointname1;
+
+update employees
+set job_id = 'IT_PROG'
+where department_id = '90' and employee_id = '100'; 
+
+rollback to savepoint savepointname1;
+----------------------------------------------------------------------------
+------------------ Power point two- Intro to SQL II
+select first_name from employees;
+select distinct first_name from employees;
+
+select distinct department_id as ID, department_name as Department from departments;
+
+select * from employees;
+
+select '27' from dual;
+
+select 'ASD' as "fOo" from departments;
+
+select first_name ||' '|| last_name,
+  salary *12 as "Annual Salary",
+  2*(300 + salary) as "Bonus Salary"
+from employees;
+
+select last_name, department_id
+from employees
+where department_id = 110;
+
+select last_name, salary
+from employees
+where salary <10000;
+
+select last_name, manager_id
+from employees
+where manager_id in (100,145, 146);
+
+select last_name, job_id, manager_id
+from employees
+where manager_id is null;
+
+select last_name, salary
+from employees
+where salary between 10000 and 12000;
+
+select last_name ||','|| first_name as "Name", salary as "Salary",
+salary *12 + commission_pct * salary as "Annual" from employees;
+
+select last_name || ', ' || first_name as "Name", salary as "Salary",
+salary*12+NVL(commission_pct,0)*salary as "Annual"
+from employees;
+
+select last_name from employees
+where last_name like 'Mc%';
+
+select last_name, job_id, salary from employees
+where job_id = 'SA_MAN' or job_id = 'AD_PRES' and salary >= 14000;
+
+select last_name, job_id, salary from employees
+where (job_id = 'SA_MAN' or job_id = 'AD_PRES') and salary >= 14000;
+
+select last_name, job_id from employees
+where job_id not in ('SA_MAN' , 'AD_PRES') and department_id = 50;
+
+select last_name, commission_pct from employees
+where commission_pct is not null;
+
+--Display details of jobs where the minimum salary is greater than 10000.
+select * from jobs --where min_salary>10000;
+SELECT * FROM JOBS; --WHERE MIN_SALARY > 10000;
+select * from employees;
+--Display the first name and join date of the employees who joined between 2002 and 2005.
+SELECT FIRST_NAME, HIRE_DATE FROM EMPLOYEES 
+WHERE TO_CHAR(HIRE_DATE, 'YYYY') BETWEEN 2002 AND 2005 ORDER BY HIRE_DATE;
+select * from employees;
+--Display first name and join date of the employees who is either IT Programmer or Sales Man.
+select first_name, hire_date from employees where job_id = 'IT_PROG' or job_id = 'SA_MAN';
+
+
+--Display employees who joined after 1st January 2008.
+select * from employees where hire_date >'01-Jan-08';
+SELECT * FROM EMPLOYEES  where hire_date > '01-jan-2008' ;
+
+--Display details of employee with ID 150 or 160.
+select * from employees where job_id in ('150','160');
+
+--Display first name, salary, commission pct, and hire date for employees with salary less than 10000.
+select first_name, salary, commission_pct, hire_date from employees where salary<10000;
+SELECT FIRST_NAME, SALARY, COMMISSION_PCT, HIRE_DATE FROM EMPLOYEES WHERE SALARY < 10000;
+
+--Display job Title, the difference between minimum and maximum salaries for jobs with max salary in the range 10000 to 20000.
+select job_title,max_salary - min_salary difference from jobs where max_salary between 10000 and 20000;
+SELECT JOB_TITLE, MAX_SALARY-MIN_SALARY DIFFERENCE FROM JOBS WHERE MAX_SALARY BETWEEN 10000 AND 20000;
+
+--Display first name, salary, and round the salary to thousands.
+select first_name, salary,round(salary,-3) from employees;
+SELECT FIRST_NAME, SALARY, ROUND(SALARY, -3) FROM EMPLOYEES;
+
+--Display details of jobs in the descending order of the title.
+select * from jobs 
+order by job_title;
+
+
+--Display employees where the first name or last name starts with S.
+select last_name from employees where last_name like 'S%';
+
+--Display employees who joined in the month of May.
+select * from employees where to_char(hire_date,'MON') = 'MAY';
+SELECT * FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE, 'MON')= 'MAY';
+
+--Display details of the employees where commission percentage is null and salary in the range 5000 to 10000 and department is 30.
+select * from employees where commission_pct is null and salary between 5000 and 10000 and department_id = 30;
+SELECT * FROM EMPLOYEES WHERE COMMISSION_PCT IS NULL AND SALARY BETWEEN 5000 AND 10000 AND DEPARTMENT_ID=30;
+
+--Display first name and date of first salary of the employees.
+select first_name, salary/12 from employees;
+SELECT FIRST_NAME, HIRE_DATE, LAST_DAY(HIRE_DATE)+1 FROM EMPLOYEES;
+
+--Display first name and experience of the employees.
+select first_name, job_id from jobs;
+SELECT FIRST_NAME, HIRE_DATE, FLOOR((SYSDATE-HIRE_DATE)/365)FROM EMPLOYEES;
+
+--Display first name of employees who joined in 2001.
+select first_name from employees where to_char(hire_date,'YYYY') = '2001';
+SELECT FIRST_NAME, HIRE_DATE FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE, 'YYYY')=2001;
+
+--Display first name and last name after converting the first letter of each name to upper case and the rest to lower case.
+select initcap(first_name), initcap(last_name) from employees;
+--Display the first word in job title.
+SELECT JOB_TITLE,  SUBSTR(JOB_TITLE,1, INSTR(JOB_TITLE, ' ')-1) FROM JOBS;
+--Display the length of first name for employees where last name contain character ‘b’ after 3rd position.
+select length(first_name) from employees where last_name like '___b%';
+SELECT FIRST_NAME, LAST_NAME FROM EMPLOYEES WHERE INSTR(LAST_NAME,'B') > 3;
+
+----------------------------------- Powerpoint three Intro to SQL III
+
+--Display department name and number of employees in the department.
+select department_name, count(employee_id) 
+from departments
+natural join employees
+group by department_name;
+
+SELECT DEPARTMENT_NAME, COUNT(*) FROM EMPLOYEES NATURAL JOIN DEPARTMENTS GROUP BY DEPARTMENT_NAME;
+
+--Display job title, employee ID, number of days between ending date and starting date for all jobs in department 30 from job history.
+select job_id, employee_id, end_date - start_date DAYS
+from job_history 
+natural join
+jobs
+where department_id = '30';
+
+SELECT EMPLOYEE_ID, JOB_TITLE, END_DATE-START_DATE DAYS 
+FROM JOB_HISTORY NATURAL JOIN JOBS 
+WHERE DEPARTMENT_ID=30;
+--Display department name and manager first name.
+select department_name, first_name
+from departments d 
+join employees e
+on d.manager_id = e.employee_id;
+
+SELECT DEPARTMENT_NAME, FIRST_NAME 
+FROM DEPARTMENTS D 
+JOIN EMPLOYEES E
+ON (D.MANAGER_ID=E.EMPLOYEE_ID);
+
+--Display department name, manager name, and city.
+select department_name, last_name, city
+from departments d join locations l on (d.location_id = l.location_id) 
+join employees e on (d.manager_id = e.employee_id);
+
+SELECT DEPARTMENT_NAME, FIRST_NAME, CITY FROM DEPARTMENTS D JOIN EMPLOYEES E ON (D.MANAGER_ID=E.EMPLOYEE_ID) JOIN LOCATIONS L USING (LOCATION_ID);
+
+--Display country name, city, and department name.
+select country_name, city, department_name 
+from locations l join countries c on (l.country_id = c.country_id)
+join
+departments d on (l.location_id = d.location_id);
+
+SELECT COUNTRY_NAME, CITY, DEPARTMENT_NAME 
+FROM COUNTRIES JOIN LOCATIONS USING (COUNTRY_ID) 
+JOIN DEPARTMENTS USING (LOCATION_ID);
+--Display job title, department name, employee last name, starting date for all jobs from 2000 to 2005.
+
+SELECT JOB_TITLE, DEPARTMENT_NAME, LAST_NAME, START_DATE 
+FROM JOB_HISTORY JOIN JOBS USING (JOB_ID) JOIN DEPARTMENTS 
+USING (DEPARTMENT_ID) JOIN  EMPLOYEES USING (EMPLOYEE_ID) 
+WHERE TO_CHAR(START_DATE,'YYYY') BETWEEN 2000 AND 2005;
+
+--Display job title and average salary of employees
+select job_title, avg(salary) 
+from jobs join employees
+on (jobs.job_id = employees.job_id)
+group by job_title;
+
+SELECT JOB_TITLE, AVG(SALARY) FROM EMPLOYEES 
+NATURAL JOIN JOBS GROUP BY JOB_TITLE
+
+--Display job title, employee name, and the difference between maximum salary for the job and salary of the employee.
+select job_title, last_name, max_salary - salary difference
+from jobs natural join employees;
+
+SELECT JOB_TITLE, FIRST_NAME, MAX_SALARY-SALARY DIFFERENCE FROM EMPLOYEES NATURAL JOIN JOBS;
+
+-----------------------Advanced SQL I
+--Display department name, average salary and number of employees with commission within the department.
+select department_name, avg(salary), count(commission_pct)
+from departments join employees on (employees.department_id = departments.department_id)
+group by department_name;
+
+SELECT DEPARTMENT_NAME, AVG(SALARY), COUNT(COMMISSION_PCT) 
+FROM DEPARTMENTS JOIN EMPLOYEES USING (DEPARTMENT_ID) 
+GROUP BY DEPARTMENT_NAME
+--Display the month in which more than 5 employees joined in any department located in Sydney.
+select to_char(hire_date,'MON'), count(employee_id)
+from employees join departments using (department_id)
+join locations using (location_id)
+where city= 'Sydney'
+group by to_char(hire_date,'MON')
+having count(*)>5;
+--Display how many employees joined in each month of the current year.
+select to_char(hire_date,'MON'),count(job_id) 
+from employees 
+where to_char(hire_date,'YYYY') = to_char(sysdate,'YYYY') 
+group by to_char(hire_date,'MON');
+
+SELECT TO_CHAR(HIRE_DATE,'MM'), COUNT (*) FROM EMPLOYEES 
+WHERE TO_CHAR(HIRE_DATE,'YYYY')= TO_CHAR(SYSDATE,'YYYY') GROUP BY TO_CHAR(HIRE_DATE,'MM') ;
+--Display manager ID and number of employees managed by the manager.
+select manager_id, count(employee_id) from employees group by manager_id; 
+ SELECT MANAGER_ID, COUNT(*) FROM EMPLOYEES GROUP BY MANAGER_ID;
+
+--Display employee ID and the date on which he ended his previous job.
+select employee_id, max(end_date) from job_history group by employee_id;
+ SELECT EMPLOYEE_ID, MAX(END_DATE) FROM JOB_HISTORY GROUP BY EMPLOYEE_ID;
+
+--Display number of employees joined after 15th of the month.
+select count(employee_id) from employees 
+where to_char(hire_date,'DD') > 15;
+SELECT COUNT(*) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'DD') > 15;
+
+--Display the country ID and number of cities we have in the country.
+select country_id, count(city) from locations 
+group by country_id;
+SELECT COUNTRY_ID,  COUNT(*)  FROM LOCATIONS GROUP BY COUNTRY_ID;
+
+--Display average salary of employees in each department who have commission percentage.
+select department_id,avg(salary) from employees 
+where commission_pct is not null 
+group by department_id;
+
+SELECT DEPARTMENT_ID, AVG(SALARY) FROM EMPLOYEES 
+WHERE COMMISSION_PCT IS NOT NULL GROUP BY DEPARTMENT_ID;
+--Display job ID, number of employees, sum of salary, and difference between highest salary and lowest salary of the employees of the job.
+select job_id, count(employee_id),sum(salary), max(salary)-min(salary) from employees group by job_id;
+
+SELECT JOB_ID, COUNT(*), SUM(SALARY), MAX(SALARY)-MIN(SALARY) SALARY FROM EMPLOYEES GROUP BY JOB_ID;
+
+--Display job ID for jobs with average salary more than 10000.
+select job_id from employees group by job_id having avg(salary)>10000  ;
+
+SELECT JOB_ID, AVG(SALARY) FROM EMPLOYEES 
+GROUP BY JOB_ID 
+HAVING AVG(SALARY)>10000;
+--Display years in which more than 10 employees joined.
+select to_char(hire_date,'YYYY') from employees 
+group by to_char(hire_date,'YYYY')
+having count(employee_id)>10 ;
+
+SELECT TO_CHAR(HIRE_DATE,'YYYY') FROM EMPLOYEES 
+GROUP BY TO_CHAR(HIRE_DATE,'YYYY') 
+HAVING COUNT(EMPLOYEE_ID) > 10;
+
+--Display departments in which more than five employees have commission percentage.
+select department_id from employees
+where commission_pct is not null
+group by department_id
+having count(COMMISSION_PCT)>5;
+
+SELECT DEPARTMENT_ID FROM EMPLOYEES 
+WHERE COMMISSION_PCT IS NOT NULL
+GROUP BY DEPARTMENT_ID 
+HAVING COUNT(COMMISSION_PCT)>5;
+
+--!!!!!!!!!!!!Display employee ID for employees who did more than one job in the past.
+select employee_id from job_history
+where job_id>5 ;
+
+SELECT EMPLOYEE_ID FROM JOB_HISTORY GROUP BY EMPLOYEE_ID HAVING COUNT(*) > 1;
+
+--Display job ID of jobs that were done by more than 3 employees for more than 100 days.
+select job_id from job_history
+where end_date-start_date>100
+group by job_id
+having count(employee_id)>3  ;
+
+SELECT JOB_ID FROM JOB_HISTORY 
+WHERE END_DATE-START_DATE > 100 
+GROUP BY JOB_ID 
+HAVING COUNT(*)>3;
+
+
+--Display department ID, year, and Number of employees joined.
+select department_id, to_char(hire_date,'YYYY'), count(employee_id) 
+from employees
+group by department_id,to_char(hire_date,'YYYY');
+
+SELECT DEPARTMENT_ID, TO_CHAR(HIRE_DATE,'YYYY'), COUNT(EMPLOYEE_ID) 
+FROM EMPLOYEES 
+GROUP BY DEPARTMENT_ID, TO_CHAR(HIRE_DATE, 'YYYY')
+ORDER BY DEPARTMENT_ID;
+--Display departments where any manager is managing more than 5 employees.
+select distinct department_id,manager_id from employees
+where manager_id is not null
+group by department_id, manager_id
+having count(employee_id)>5;
+
+SELECT DISTINCT DEPARTMENT_ID, manager_id
+FROM EMPLOYEES
+GROUP BY DEPARTMENT_ID, MANAGER_ID 
+HAVING COUNT(EMPLOYEE_ID) > 5;
+--Change salary of employee 115 to 8000 if the existing salary is less than 6000.
+update employees set salary = 8000 
+where employee_id = '115' and salary <6000;
+
+
+
+---------------------Advanced SQL II
+SELECT TO_CHAR(HIRE_DATE,'MON-YY')
+FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID) JOIN  LOCATIONS USING (LOCATION_ID) 
+WHERE  CITY = 'Sydney'
+GROUP BY TO_CHAR(HIRE_DATE,'MON-YY')
+HAVING COUNT(*) > 5
+--Display details of departments in which the maximum salary is more than 10000.
+select * from departments where department_id in
+(select department_id from employees group by department_id having max(salary)>10000 )
+
+--Display details of departments managed by ‘Smith’.
+select * from departments where department_id in
+(select employee_id from employees where last_name = 'Smith');
+
+SELECT * FROM DEPARTMENTS WHERE MANAGER_ID IN 
+  (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME='SMITH');
+--Display jobs into which employees joined in the current year.
+
+select * from jobs where job_id in
+(select job_id from employees 
+where to_char(hire_date,'YYYY') = to_char(sysdate,'YYYY'));
+
+--Display employees who did not do any job in the past.
+
+
+SELECT * FROM EMPLOYEES WHERE EMPLOYEE_ID NOT IN 
+       (SELECT EMPLOYEE_ID FROM JOB_HISTORY);
+
+--Display job title and average salary for employees who did a job in the past.
+SELECT JOB_TITLE, AVG(SALARY) FROM JOBS NATURAL JOIN EMPLOYEES 
+GROUP BY JOB_TITLE 
+WHERE EMPLOYEE_ID IN
+    (SELECT EMPLOYEE_ID FROM JOB_HISTORY);
+--Display country name, city, and number of departments where department has more than 5 employees.
+select country_name, city from locations join countries using (country_id) where location_id in
+(select location_id, count(department_id) from departments group by department_id having count(employee_id) >5);
+
+SELECT COUNTRY_NAME, CITY, COUNT(DEPARTMENT_ID)
+FROM COUNTRIES JOIN LOCATIONS USING (COUNTRY_ID) JOIN DEPARTMENTS USING (LOCATION_ID) 
+WHERE DEPARTMENT_ID IN 
+    (SELECT DEPARTMENT_ID FROM EMPLOYEES 
+	 GROUP BY DEPARTMENT_ID 
+	 HAVING COUNT(DEPARTMENT_ID)>5)
+GROUP BY COUNTRY_NAME, CITY;
+
+--Display details of manager who manages more than 5 employees.
+select * from employees e join employees m on(e.manager_id = m.employee_id) 
+where e.manager_id in
+(select e.manager_id from employees where count(m.employee_id) > 5);
+ 
+ 
+SELECT FIRST_NAME FROM EMPLOYEES 
+WHERE EMPLOYEE_ID IN 
+(SELECT MANAGER_ID FROM EMPLOYEES 
+ GROUP BY MANAGER_ID 
+ HAVING COUNT(*)>5);
+--Display employee name, job title, start date, and end date of past jobs of all employees with commission percentage null.
+select last_name, job_title, start_date, end_date 
+from employees join jobs  using (job_id) 
+join job_history using (job_id) 
+where employee_id in
+(select employee_id from employees where commission_pct is null);
+
+SELECT FIRST_NAME, JOB_TITLE, START_DATE, END_DATE
+FROM JOB_HISTORY JH JOIN JOBS J USING (JOB_ID) JOIN EMPLOYEES E  ON ( JH.EMPLOYEE_ID = E.EMPLOYEE_ID)
+WHERE COMMISSION_PCT IS NULL;
+--Display the departments into which no employee joined in last two years.
+-- Select the employees whose salary is bigger than their department's average salary
+select last_name from employees where department_id in
+(select department_id,avg(salary) from employees group by department_id having salary >avg(salary));
+
+
+
+select * from my_employee;
+drop table my_employee;
+CREATE TABLE my_employee
+(id NUMBER(4) CONSTRAINT my_employee_id_nn NOT NULL,
+last_name VARCHAR2(25),
+first_name VARCHAR2(25),
+userid VARCHAR2(8),
+salary NUMBER(9,2));
+
+DESCRIBE my_employee
+
+insert INTO my_employee VALUES (1, 'Patel', 'Ralph', 'rpatel', 895);
+
+insert INTO my_employee (id,last_name, first_name,userid, salary) VALUES(2, 'Dancs', 'Betty', 'bdancs', 860);
+
+select * from my_employee;
+
+--Insert INTO my_employee VALUES (&p_id, '&p_last_name', '&p_first_name', '&p_userid', &p_salary);
+
+insert into my_employee values(2,'Dancs', 'Betty', 'bdancs', 860);
+
+insert into my_employee(ID, Last_Name,First_Name, UserID,Salary)
+values(2,'Biri','Ben','bbiri',1100);
+select * from my_employee;
+
+insert into my_employee(ID, Last_Name,First_Name, UserID,Salary)
+values(7,'Goo','Woot','Pile',11100);
+select * from my_employee;
+
+INSERT INTO my_employee
+VALUES (&p_id, '&p_last_name', '&p_first_name',
+ '&p_userid', &p_salary);
+ 
+ commit;
+ 
+update my_employee
+set last_name = 'Drexler'
+where id = 2;
+ 
+ select * from my_employee;
+
+update my_employee
+set salary = 1000
+where salary <9000;
+
+delete from my_employee where id = 2;
+
+savepoint savepoint2;
+
+delete from my_employee;
+
+select * from my_employee;
+
+rollback to savepoint2;
+
+commit;
+
+select distinct job_id from employees;
+
+select employee_id, last_name, salary *12 AS Annual_Salary from employees;
+
+describe departments;
+
+describe employees;
+
+select employee_id ,job_id, hire_date as START_DATE from employees;
+
+select distinct job_id from employees;
+
+select employee_id as "Emp #", last_name as "Employee", job_id as Job, hire_date as "Hire_Date" from employees;
+
+select last_name ||','|| job_id as "Employee and Title" from employees;
+
+--1
+select last_name, salary from employees where salary >12000 ;
+--2
+
+select last_name, department_id from employees where employee_id = 100;
+
+select last_name, salary from employees where salary<5000 and salary>1200;
+
+select last_name, job_id, hire_date 
+from employees 
+where last_name in ( 'Taylor','Matos')
+order by hire_date;
+
+select last_name, department_id
+from employees
+where department_id in (20,50)
+order by last_name asc;
+
+SELECT last_name, hire_date
+FROM employees
+WHERE hire_date LIKE '%03'; 
+
+select last_name,job_id 
+from employees
+where manager_id is null;
+
+select * from employees order by last_name asc;
+
+select last_name, salary, commission_pct 
+from employees 
+where commission_pct is not null;
+
+select last_name, salary from employees where salary>'&p_salary';
+
+select employee_id,last_name,salary,department_id
+from employees 
+where manager_id = '&p_manager_id' 
+order by '&p_order_col';
+
+select last_name from employees where last_name like '_a%';
+
+select last_name from employees where last_name like '%a%' and last_name like '%e%';
+
+select last_name,job_id, salary
+from employees
+where job_id in ('SA_REP','ST_CLERK') and salary not in (2500,3500,7000);
+
+select sysdate from dual;
+
+select employee_id,last_name, salary, salary * .155  as "New Salary" from employees;
+
+select employee_id,last_name, salary,
+salary * 1.155  as "New Salary" , 
+(salary * 1.155) - salary as "Increase" 
+from employees;
+
+select initcap(last_name) as "Name",length(last_name) as "Length"
+from employees
+where last_name like 'J%' or last_name like 'A%' or last_name like'M%'
+order by last_name;
+
+select initcap(last_name) as "Name",length(last_name) as "Length"
+from employees where last_name like upper('&p%');
+
+SELECT last_name, ROUND(MONTHS_BETWEEN(
+SYSDATE, hire_date)) MONTHS_WORKED
+FROM employees
+ORDER BY months_worked; 
+
+select last_name,
+lpad(salary,15,'$') salary
+from employees;
+
+select rpad(last_name,8) || ' '||
+  rpad(' ',salary/1000, '*')
+  employees_and_their_salaries
+from employees
+order by salary desc;
+
+SELECT last_name, trunc((SYSDATE-hire_date)/7) AS TENURE
+FROM employees
+WHERE department_id = 90
+ORDER BY TENURE DESC;
+
+
+select department_id,department_name,location_id,city
+from departments
+natural join locations
+where department_id in (20,50);
+
+select employee_id,last_name,
+  location_id, department_id
+from employees join departments
+using (department_id);
+
+SELECT l.city, d.department_name
+FROM locations l JOIN departments d USING (location_id)
+WHERE location_id = 1400;
+
+SELECT first_name, d.department_name, d.manager_id
+FROM employees e JOIN departments d USING (department_id)
+WHERE department_id = 50;
+
+SELECT e.employee_id, e.last_name, e.department_id,
+d.department_id, d.location_id
+FROM employees e JOIN departments d
+ON (e.department_id = d.department_id);
+
+select sysdate from dual;
+
+select last_name,(Sysdate-hire_date)/7 as weeks from employees;
+
+select to_char(sysdate, 'DD Month YYYY') as Today from dual;
+
+select to_date('2003/07/09', 'yyyy/mm/dd') from dual;
+
+--insert into foo (bname, bday) values ('ANDY',TO_DATE('13-AUG-66 12:56 A.M.','DD-MON-YY HH:MI A.M.'));
+
+select NEXT_DAY(sysdate,'TUESDAY') as "NEXT TUESDAY" from dual;
+
+select MONTHS_BETWEEN(TO_DATE('02-02-1995','MM-DD-YYYY'),
+TO_DATE('01-01-1995','MM-DD-YYYY') ) as "Elapsed" from dual;
+
+select * from employees, departments;
+
+select * from employees, departments
+where employees.department_id = departments.department_id;
+
+select last_name,department_id, department_name
+from employees,departments
+where employees.department_id = departments.department_id;
+
+select e.last_name, d.department_id, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id;
+
+select e.last_name as Employee, m.last_name as Manager
+from employees e, employees m
+where e.manager_id = m.employee_id;
+
+select e.last_name as Employee, m.last_name as Manager
+from employees e, employees m
+where e.manager_id = m.employee_id
+or e.manager_id is null
+order by e.last_name;
+
+
+select * from employees;
+
+select e.last_name as Employee, m.last_name as Manager
+from employees e, employees m
+where e.manager_id = m.employee_id
+union
+select e.last_name as Employee, null as Manager
+from employees e
+where e.manager_id is null;
+
+select *
+from employees inner join departments
+on employees.department_id = departments.department_id;
+
+select *
+from employees, departments
+where employees.department_id = departments.department_id;
+
+select *
+from employees, departments
+where employees.department_id = departments.department_id;
+
+select *
+from employees 
+right join 
+departments
+on employees.department_id = departments.department_id;
+
+select *
+from employees 
+full join 
+departments
+on employees.department_id = departments.department_id;
+
+select e.last_name as Employee, m.last_name as Manager
+from employees e left join employees m
+on e.manager_id = m.employee_id;
+
+SELECT location_id, street_address, city, state_province,
+country_name
+FROM locations
+NATURAL JOIN countries; 
+
+select e.last_name, e.department_id, d.department_name
+from employees e
+full join
+departments d
+on e.department_id = d.department_id
+where e.department_id is not null;
+
+--SELECT last_name, department_id, department_name
+--FROM employees
+--JOIN departments
+--USING (department_id); 
+
+select e.last_name, e.job_id, e.department_id, D.Department_Name
+from employees e
+join
+departments d
+on e.department_id = d.department_id
+where e.department_id = 20;
+
+--SELECT e.last_name, e.job_id, e.department_id,
+--d.department_name
+--FROM employees e JOIN departments d
+--ON (e.department_id = d.department_id)
+--JOIN locations l
+--ON (d.location_id = l.location_id)
+--WHERE LOWER(l.city) = 'toronto'; 
+
+select e.last_name as Employee, E.Employee_Id as EMP#, m.last_name as Manager, m.employee_id as Mrg#
+from employees e, employees m
+where m.employee_id = e.manager_id;
+
+select e.last_name as Employee, E.Employee_Id as EMP#, m.last_name as Manager, m.employee_id as Mrg#
+from employees e, employees m
+where e.manager_id = m.employee_id
+union
+select e.last_name as Employee, E.Employee_Id as EMP#, null as Manager, null as Mrg#
+from employees e
+where e.manager_id is null;
+
+
+select e.department_id as Department, e.last_name as Employee, c.last_name as Colleague
+from employees e
+join
+employees c
+on e.department_id = c.department_id
+where e.last_name!=c.last_name 
+order by e.department_id ASC;
+
+SELECT e.department_id department, e.last_name employee,
+ c.last_name colleague
+FROM employees e JOIN employees c
+ON (e.department_id = c.department_id)
+WHERE e.employee_id <> c.employee_id
+ORDER BY e.department_id, e.last_name, c.last_name; 
+
+describe job_grades;
+
+select * from job_grades;
+
+
+SELECT e.last_name, e.job_id, d.department_name,
+ e.salary, j.grade_level
+FROM employees e JOIN departments d
+ON (e.department_id = d.department_id)
+JOIN job_grades j
+ON (e.salary BETWEEN j.lowest_sal AND j.highest_sal); 
+
+select * from employees;
+select * from departments;
+
+select e.last_name, e.hire_date
+from employees e
+join 
+employees d
+on d.last_name = 'Davies'
+where e.hire_date > d.hire_date;
+
+select e.last_name as Employee, e.hire_date as Employee_Hire_Date, m.last_name as Manager, m.hire_date as Manager_Hire_date
+from employees e
+join 
+employees m
+on m.employee_id = e.manager_id
+where m.hire_date > e.hire_date
+order by e.last_name;
+
+--natural join: using clause, on clause
+
+SELECT l.city, d.department_name
+FROM locations l JOIN departments d USING (location_id)
+WHERE location_id = 1400;
+---------------------------------------------------------------------
+select AVG(salary) from employees
+where department_id = 100;
+
+select COUNT(distinct last_name) from employees;
+
+select COUNT(distinct last_name) from employees;
+
+select COUNT(*) from employees
+where first_name = 'John';
+
+select AVG(salary), MAX(salary), MIN(salary), SUM(salary)
+from employees natural join jobs
+where job_title like 'Sales%';
+
+select MIN(hire_date), MAX(hire_date)
+from employees
+where salary between 1500 and 2500;
+
+select AVG(commission_pct)
+from employees;
+
+select AVG(NVL(commission_pct,0))
+from employees;
+
+select department_id, AVG(salary)
+from employees
+group by department_id
+order by department_id;
+
+select department_id, count(*)
+from employees
+group by(department_id);
+
+
+select department_name, avg(salary)
+from employees join departments
+on employees.department_id = departments.department_id
+group by department_name
+having avg(salary) > 5000;
+
+SELECT job_title, SUM(salary)
+FROM employees natural join jobs
+WHERE job_title NOT LIKE 'Sales%'
+GROUP BY job_title
+HAVING AVG(salary) > 5000
+ORDER BY SUM(salary) DESC;
+
+SELECT MAX(AVG(salary))
+FROM employees
+GROUP BY department_id;
+
+SELECT department_name, job_title, AVG(salary)
+FROM employees join departments
+on employees.department_id = departments.department_id
+join jobs
+on employees.job_id = jobs.job_id
+GROUP BY department_name, job_title
+ORDER BY job_title, department_name;
+
+select job_id, round(max(salary),0),round(min(salary),0),round(sum(salary),0),round(avg(salary),0) from employees
+group by job_id;
+
+select job_id, count(*) from employees
+group by job_id;
+
+select count(distinct manager_id) from employees;
+
+select max(salary) - min(salary) difference from employees;
+
+
+SELECT manager_id, MIN(salary)
+FROM employees
+WHERE manager_id IS NOT NULL
+GROUP BY manager_id
+HAVING MIN(salary) > 6000
+ORDER BY MIN(salary) DESC; 
+
+select year(hire_date) from employees;
+
+SELECT COUNT(*) total,
+ SUM(DECODE(TO_CHAR(hire_date,
+'YYYY'),1995,1,0))"1995",
+ SUM(DECODE(TO_CHAR(hire_date,
+'YYYY'),1996,1,0))"1996",
+ SUM(DECODE(TO_CHAR(hire_date,
+'YYYY'),1997,1,0))"1997",
+ SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),1998,1,0))"1998"
+FROM employees; 
+
+
+SELECT job_id "Job",
+ SUM(DECODE(department_id , 20, salary)) "Dept 20",
+ SUM(DECODE(department_id , 50, salary)) "Dept 50",
+ SUM(DECODE(department_id , 80, salary)) "Dept 80",
+ SUM(DECODE(department_id , 90, salary)) "Dept 90",
+ SUM(salary) "Total"
+FROM employees
+GROUP BY job_id; 
